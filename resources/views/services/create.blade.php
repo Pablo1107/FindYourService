@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
   <h1 class="h2">Create Service</h1>
 </div>
 <form method="POST" action="/services">
@@ -31,5 +31,4 @@
     <button class="button is-primary">Create</button>
   </div>
 </form>
-
 @endsection
