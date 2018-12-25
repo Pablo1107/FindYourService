@@ -55,7 +55,7 @@ class ServicesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Service $service
      * @return \Illuminate\Http\Response
      */
     public function show(Service $service)
@@ -66,7 +66,7 @@ class ServicesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Service $service
      * @return \Illuminate\Http\Response
      */
     public function edit(Service $service)
@@ -78,7 +78,7 @@ class ServicesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Service $service
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Service $service)
@@ -90,7 +90,7 @@ class ServicesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Service $service
      * @return \Illuminate\Http\Response
      */
     public function destroy(Service $service)
