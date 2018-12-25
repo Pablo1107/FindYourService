@@ -16,5 +16,8 @@
     </div> 
   </div>
 </div>
+<h1 class="h3">Description</h1>
 <p>{{ $service->description }}</p> 
+<h1 class="h3">Address</h1>
+{{ $service->address }}
 @endsection
