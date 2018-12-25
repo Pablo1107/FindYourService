@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/admin', 'ServicesController@index');
+
+Route::resource('services', 'ServicesController');
