@@ -40,4 +40,7 @@ return [
         ],
     ],
 
+    'google' => [
+      'key' => env('GOOGLE_APP_KEY'),
+    ]
 ];
