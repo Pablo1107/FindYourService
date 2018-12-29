@@ -11,19 +11,35 @@ class ServicesController extends Controller
   /**
    * Display a listing of the resource.
    *
+   * @param \App\Services\Google $google
    * @return \Illuminate\Http\Response
    */
-  public function index()
+  public function index(Google $google)
   {
     $service = new \App\Service();
     $columns = $service->getTableColumns();
     $services = Service::all();
-    return view('admin', compact('services', 'columns'));
+    return view('admin', compact('services', 'columns', 'google'));
+  }
+
+  /**
+   * Return a list of the stored services.
+   *
+   * @param \App\Services\Google $google
+   * @return \Illuminate\Http\Response
+   */
+  public function list(Google $google)
+  {
+    $service = new \App\Service();
+    $columns = $service->getTableColumns();
+    $services = Service::all();
+    return $services;
   }
 
   /**
    * Show the form for creating a new resource.
    *
+   * @param \App\Services\Google $google
    * @return \Illuminate\Http\Response
    */
   public function create(Google $google)
@@ -56,8 +72,7 @@ class ServicesController extends Controller
   /**
    * Display the specified resource.
    *
-   * @param  Service $service
-   * @return \Illuminate\Http\Response
+   * @param  Service $service * @return \Illuminate\Http\Response
    */
   public function show(Service $service)
   {
