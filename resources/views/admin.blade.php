@@ -41,7 +41,8 @@
       </div>
       <div class="form-group">
         <label class="label">Description</label>
-        <input type="text" name="description" class="form-control" placeholder="">
+        <textarea type="text" name="description" class="form-control" placeholder="">
+        </textarea>
       </div>
       <div class="form-group">
         <label class="label">Address</label>
