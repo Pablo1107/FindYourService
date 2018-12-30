@@ -16,10 +16,24 @@ class ServicesController extends Controller
    */
   public function index(Google $google)
   {
-    $service = new \App\Service();
+    $service = new Service();
     $columns = $service->getTableColumns();
     $services = Service::all();
     return view('admin', compact('services', 'columns', 'google'));
+  }
+
+  /**
+   * Display the public view.
+   *
+   * @param \App\Services\Google $google
+   * @return \Illuminate\Http\Response
+   */
+  public function public(Google $google)
+  {
+    $service = new Service();
+    $columns = $service->getTableColumns();
+    $services = Service::all();
+    return view('services.public', compact('services', 'columns', 'google'));
   }
 
   /**
@@ -30,7 +44,7 @@ class ServicesController extends Controller
    */
   public function list(Google $google)
   {
-    $service = new \App\Service();
+    $service = new Service();
     $columns = $service->getTableColumns();
     $services = Service::all();
     return $services;
