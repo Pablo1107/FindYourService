@@ -76,6 +76,15 @@ body {
   }
 }
 
+tr:hover td {
+  background: rgba(0, 0, 0, 0.05);  
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+td a {
+    display: block;
+    border: 0px solid black;
+}
+
 /*
  * Navbar
  */

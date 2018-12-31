@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/public.js":
-/*!********************************!*\
-  !*** ./resources/js/public.js ***!
-  \********************************/
+/***/ "./resources/js/admin.js":
+/*!*******************************!*\
+  !*** ./resources/js/admin.js ***!
+  \*******************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -97,7 +97,20 @@ var App = new Vue({
   el: '#app',
   data: {
     services: [],
-    search: ''
+    form: {
+      visible: false,
+      address: '',
+      state: '',
+      country: '',
+      zipcode: '',
+      latitude: 0.0,
+      longitude: 0.0
+    }
+  },
+  methods: {
+    toggleForm: function toggleForm() {
+      this.form.visible = !this.form.visible;
+    }
   },
   created: function created() {
     var _this = this;
@@ -120,33 +133,63 @@ var App = new Vue({
       console.log('There was an error.');
     });
   },
-  computed: {
-    searchedServices: function searchedServices() {
-      var _this2 = this;
+  mounted: function mounted() {
+    var _this2 = this;
 
-      var filtered = this.services;
+    this.autocomplete = new google.maps.places.Autocomplete(this.$refs.autocomplete, {
+      types: ['geocode']
+    });
+    this.autocomplete.addListener('place_changed', function () {
+      var componentForm = {
+        'administrative_area_level_1': 'state',
+        'country': 'country',
+        'postal_code': 'zipcode'
+      };
 
-      if (this.search) {
-        filtered = this.services.filter(function (service) {
-          return service.title.toLowerCase().includes(_this2.search.toLowerCase());
-        });
+      var place = _this2.autocomplete.getPlace();
+
+      var ac = place.address_components;
+      _this2.form.latitude = place.geometry.location.lat();
+      _this2.form.longitude = place.geometry.location.lng();
+      _this2.form.address = place.name;
+
+      for (var i = 0; i < ac.length; i++) {
+        var addressType = ac[i].types[0];
+        console.log(addressType);
+        var val = ac[i]['long_name'];
+
+        if (componentForm[addressType]) {
+          _this2.form[componentForm[addressType]] = val;
+        } else if (addressType == 'postal_code_suffix') {
+          _this2.form['zipcode'] += val;
+        }
       }
-
-      return filtered;
-    }
+    });
   }
 });
 
 /***/ }),
 
-/***/ 1:
-/*!**************************************!*\
-  !*** multi ./resources/js/public.js ***!
-  \**************************************/
+/***/ "./resources/sass/bootstrap.scss":
+/*!***************************************!*\
+  !*** ./resources/sass/bootstrap.scss ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ 0:
+/*!*********************************************************************!*\
+  !*** multi ./resources/js/admin.js ./resources/sass/bootstrap.scss ***!
+  \*********************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /mnt/sda4/Coding/Web/FindYourService/resources/js/public.js */"./resources/js/public.js");
+__webpack_require__(/*! /mnt/sda4/Coding/Web/FindYourService/resources/js/admin.js */"./resources/js/admin.js");
+module.exports = __webpack_require__(/*! /mnt/sda4/Coding/Web/FindYourService/resources/sass/bootstrap.scss */"./resources/sass/bootstrap.scss");
 
 
 /***/ })

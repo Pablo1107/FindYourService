@@ -75,5 +75,5 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key={{ $google->apiKey }}&libraries=places&"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-<script src="../js/app.js"></script>
+<script src="../js/admin.js"></script>
 @endsection
