@@ -11,45 +11,17 @@
 
 
     <style>
-.bd-placeholder-img {
-  font-size: 1.125rem;
-  text-anchor: middle;
+html,
+body {
+  height: 100%;
+  margin: 0
 }
-
-             @media (min-width: 768px) {
-               .bd-placeholder-img-lg {
-                 font-size: 3.5rem;
-               }
-             }
-             .label:not(:last-child) {
-
-               margin-bottom: .5em;
-
-             }
-             .label {
-
-               color: rgb(236, 230, 218);
-
-             }
-             .label {
-
-               color: #363636;
-               display: block;
-               font-size: 1rem;
-               font-weight: 700;
-
-             } 
     </style>
     <link href="{{ URL::asset('css/bootstrap.css') }}" rel="stylesheet">
   </head>
   <body>
-    <div class="container">
-      <div id="app">
-        <router-view></router-view>
-      </div>
-
-    </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ $google->apiKey }}&libraries=places&"></script>
+    <div id="app"></div>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key={{ $google->apiKey }}&libraries=places&"></script> -->
     <script src="../js/public.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

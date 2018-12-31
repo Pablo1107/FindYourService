@@ -51,20 +51,20 @@
         <input type="hidden" v-model="form.address" name="address" value="">
       </div>
       <div class="form-group">
-        <label class="label">State</label>
-        <input type="text" v-model="form.state" name="state"
+        <label class="label">City</label>
+        <input type="text" v-model="form.city" name="city"
                class="form-control" placeholder="">
       </div>
       <div class="form-group">
-        <label class="label">Country</label>
-        <input type="text" v-model="form.country" name="country" class="form-control" placeholder="">
+        <label class="label">State</label>
+        <input type="text" v-model="form.state" name="state" class="form-control" placeholder="">
       </div>
       <div class="form-group">
         <label class="label">Zip Code</label>
         <input type="text" v-model="form.zipcode" name="zipcode" class="form-control" placeholder="">
       </div>
-      <input type="hidden" id="latitude" name="latitude" value="">
-      <input type="hidden" id="longitude" name="longitude" value="">
+      <input type="hidden" v-model="form.latitude" name="latitude" value="">
+      <input type="hidden" v-model="form.longitude" name="longitude" value="">
       <button type="submit" class="btn btn-primary">Create</button>
     </form>
   </div>

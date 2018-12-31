@@ -20,4 +20,14 @@
 <p>{{ $service->description }}</p> 
 <h1 class="h3">Address</h1>
 {{ $service->address }}
+<h1 class="h3">City</h1>
+{{ $service->city }}
+<h1 class="h3">State</h1>
+{{ $service->state }}
+<h1 class="h3">Zipcode</h1>
+{{ $service->zipcode }}
+<h1 class="h3">Longitude</h1>
+{{ $service->longitude }}
+<h1 class="h3">Latitude</h1>
+{{ $service->latitude }}
 @endsection

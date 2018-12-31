@@ -1,0 +1,27 @@
+<template id="">
+  <nav class="navbar navbar-dark fixed-bottom bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">FindYourService</a>
+    <input class="form-control form-control-dark w-100"
+           type="text"
+           placeholder="Search"
+           aria-label="Search"
+           :value="value" @input="updateValue($event.target.value)">
+    <ul class="navbar-nav px-3">
+      <li class="nav-item text-nowrap">
+        <a class="nav-link" href="#">Sign out</a>
+      </li>
+    </ul>
+  </nav>
+</template>
+
+<script charset="utf-8">
+export default {
+  props: ['value'],
+  name: 'Navbar',
+  methods: {
+    updateValue(value) {
+      this.$emit('input', value.toLowerCase());
+    }
+  }
+}
+</script>
