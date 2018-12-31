@@ -73,11 +73,11 @@ class ServicesController extends Controller
       'title' => request('title'),
       'description' => request('description'),
       'address' => request('address'),
-      'city' => 'Buenos Aires',
-      'state' => 'Buenos Aires',
-      'zipcode' => '1111',
-      'latitude' => 1.0,
-      'longitude' => 1.9
+      'city' => request('city'), 
+      'state' => request('state'),
+      'zipcode' => request('zipcode'),
+      'latitude' => request('latitude'),
+      'longitude' => request('longitude')
     ]);
 
     return redirect('admin');
