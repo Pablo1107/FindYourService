@@ -1,5 +1,9 @@
+import './bootstrap';
+import router from './routes';
+
 let App = new Vue({
   el: '#app',
+  router,
   data: {
     services: [],
     search: '',
