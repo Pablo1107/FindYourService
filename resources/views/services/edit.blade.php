@@ -7,29 +7,55 @@
 <form method="POST" action="/services/{{ $service->id }}">
   @method('PATCH')
   @csrf
-  <div class="field">
+  <div class="form-group">
     <label class="label">Title</label>
-    <div class="control">
-      <input class="input" name="title" type="text" placeholder="" value="{{ $service->title }}">
-    </div>
+    <input type="text" name="title" class="form-control" placeholder="" value="{{ $service->title }}">
   </div>
-
-  <div class="field">
+  <div class="form-group">
     <label class="label">Description</label>
-    <div class="control">
-      <textarea class="textarea" name="description" placeholder="">{{ $service->description }}</textarea>
-    </div>
+    <textarea type="text" name="description" class="form-control" placeholder="">{{ $service->description }}</textarea>
   </div>
-
-  <div class="field">
+  <div class="form-group">
     <label class="label">Address</label>
-    <div class="control">
-      <input class="input" name="address" type="text" placeholder="" value="{{ $service->address }}">
-    </div>
+    <input type="text"
+           ref="autocomplete"
+           class="form-control"
+           placeholder=""
+           onFocus="value = ''"
+           value="{{ $service->address }}">
+    <input type="hidden"
+           v-model="form.address"
+           name="address"
+           value="{{ $service->address }}">
   </div>
-
-  <div class="control">
-    <button class="button is-primary">Edit</button>
+  <div class="form-group">
+    <label class="label">City</label>
+    <input type="text"
+           v-model="form.city" 
+           name="city"
+           class="form-control" placeholder=""
+           value="{{ $service->city }}">
   </div>
+  <div class="form-group">
+    <label class="label">State</label>
+    <input type="text"
+           v-model="form.state"
+           name="state"
+           class="form-control"
+           placeholder=""
+           value="{{ $service->state }}">
+  </div>
+  <div class="form-group">
+    <label class="label">Zip Code</label>
+    <input type="text"
+           v-model="form.zipcode"
+           name="zipcode"
+           class="form-control"
+           placeholder=""
+           value="{{ $service->zipcode }}">
+  </div>
+  <input type="hidden" v-model="form.latitude" name="latitude" value="">
+  <input type="hidden" v-model="form.longitude" name="longitude" value="">
+  <button type="submit" class="btn btn-primary">Save changes</button>
 </form>
 @endsection

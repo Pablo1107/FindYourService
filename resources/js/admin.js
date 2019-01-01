@@ -1,13 +1,28 @@
 import Vue from 'vue';
+import VueRouter from 'vue-router';
+Vue.use(VueRouter);
 import axios from 'axios';
 
 let App = new Vue({
   el: '#app',
   data: {
-    services: [
-    ],
+    services: [],
+    completeServices: [],
     form: {
       visible: false,
+      address: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      latitude: 0.0,
+      longitude: 0.0,
+    },
+    currentService: {
+      visible: false,
+      edit: false,
+      id: -1,
+      title: '',
+      description: '',
       address: '',
       city: '',
       state: '',
@@ -19,7 +34,44 @@ let App = new Vue({
   methods: {
     toggleForm() {
       this.form.visible = !this.form.visible;
-    }
+    },
+    showService(id) {
+      if(id != this.currentService.id) {
+        let currentService = this.completeServices.find(service => service.id === id);
+        console.log(currentService);
+        this.currentService.visible = true; 
+        this.currentService.id = id;
+        this.currentService.title = currentService.title;
+        this.currentService.description = currentService.description;
+        this.currentService.address = currentService.address;
+        this.currentService.city = currentService.city;
+        this.currentService.state = currentService.state;
+        this.currentService.zipcode = currentService.zipcode;
+        this.currentService.latitude = currentService.latitude;
+        this.currentService.longitude = currentService.longitude;
+      } else {
+        this.currentService.visible = false;
+        this.currentService.id = -1;
+      }
+    },
+    deleteService(id) {
+      axios.delete('/services/' + id)
+        .then(response => {
+          console.log('Success');
+          for(let i = 0; i < this.services.length; i++) {
+            if(this.services[i].id == id) {
+              this.services.splice(i, 1);
+              break;
+            }
+          }
+          this.currentService.visible = false; 
+          window.location.href = "#";
+        })
+        .catch(response => {
+          console.log('Error');
+          console.log(response);
+        });
+    },
   },
 
   created() {
@@ -29,6 +81,16 @@ let App = new Vue({
         for(let i = 0; i < services.length; i++) {
           this.services.push({ 
             id: services[i].id, title: services[i].title, city: services[i].city 
+          });
+          this.completeServices.push({ 
+            id: services[i].id,
+            title: services[i].title,
+            description: services[i].description,
+            city: services[i].city,
+            state: services[i].state,
+            zipcode: services[i].zipcode,
+            longitude: services[i].longitude,
+            latitude: services[i].latitude,
           });
         }
 

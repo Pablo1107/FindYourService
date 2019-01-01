@@ -126,6 +126,6 @@ class ServicesController extends Controller
   public function destroy(Service $service)
   {
     $service->delete();
-    return redirect('admin');
+    return ['Success'];
   }
 }
