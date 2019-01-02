@@ -3,35 +3,50 @@
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       <h1 class="h2">Create Service</h1>
     </div>
-    <form @submit.prevent="onSubmit">
+    <form @submit.prevent="onSubmit" @keydown="errors.clear($event.target.name)">
       <div class="form-group">
         <label class="label">Title</label>
         <input type="text" name="title"
-               class="form-control" v-model="form.title">
+               class="form-control"
+               :class="{ 'is-invalid': errors.get('title') }"
+               v-model="form.title">
+        <div class="invalid-feedback" v-text="errors.get('title')"></div>
       </div>
       <div class="form-group">
         <label class="label">Description</label>
         <textarea type="text" name="description"
+                  :class="{ 'is-invalid': errors.get('description') }"
                   class="form-control" v-model="form.description">
         </textarea>
+        <div class="invalid-feedback" v-text="errors.get('description')"></div>
       </div>
       <div class="form-group">
         <label class="label">Address</label>
         <input type="text" ref="autocomplete"
-               class="form-control" onFocus="value = ''">
-        <input type="hidden" v-model="form.address" name="address" value="">
+               :class="{ 'is-invalid': errors.get('address') }"
+               class="form-control"
+               onFocus="value = ''"
+               @keydown="errors.clear('address')">
+        <input type="hidden" v-model="form.address" name="address">
+        <div class="invalid-feedback" v-text="errors.get('address')"></div>
       </div>
       <div class="form-group">
         <label class="label">City</label>
-        <input type="text" v-model="form.city" name="city" class="form-control">
+        <input type="text" v-model="form.city" name="city" class="form-control"
+               :class="{ 'is-invalid': errors.get('city') }">
+        <div class="invalid-feedback" v-text="errors.get('city')"></div>
       </div>
       <div class="form-group">
         <label class="label">State</label>
-        <input type="text" v-model="form.state" name="state" class="form-control">
+        <input type="text" v-model="form.state" name="state" class="form-control"
+               :class="{ 'is-invalid': errors.get('state') }">
+        <div class="invalid-feedback" v-text="errors.get('state')"></div>
       </div>
       <div class="form-group">
         <label class="label">Zip Code</label>
-        <input type="text" v-model="form.zipcode" name="zipcode" class="form-control">
+        <input type="text" v-model="form.zipcode" name="zipcode" class="form-control"
+               :class="{ 'is-invalid': errors.get('zipcode') }">
+        <div class="invalid-feedback" v-text="errors.get('zipcode')"></div>
       </div>
       <input type="hidden" v-model="form.latitude" name="latitude" value="">
       <input type="hidden" v-model="form.longitude" name="longitude" value="">
@@ -41,6 +56,26 @@
 </template>
 
 <script charset="utf-8">
+class Errors {
+  constructor() {
+    this.errors = {};
+  }
+
+  get(field) {
+    if(this.errors[field]) {
+      return this.errors[field][0];
+    }
+  }
+
+  record(errors) {
+    this.errors = errors;
+  }
+
+  clear(field) {
+    delete this.errors[field];
+  }
+}
+
 export default {
   data() {
     return {
@@ -53,7 +88,8 @@ export default {
         zipcode: '',
         latitude: 0.0,
         longitude: 0.0
-      }
+      },
+      errors: new Errors(),
     }
   },
   methods: {
@@ -75,8 +111,9 @@ export default {
       console.log(response);
       this.$emit('success', this.form);
     },
-    onFail() {
-      console.log(error);
+    onFail(error) {
+      console.log(error.response);
+      this.errors.record(error.response.data.errors);
     }
   },
   mounted() {
@@ -118,3 +155,7 @@ export default {
 }
 
 </script>
+
+<style type="text/css" media="screen">
+.invalid-feedback:empty { display: none }
+</style>

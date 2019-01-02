@@ -69,6 +69,14 @@ class ServicesController extends Controller
    */
   public function store(Request $request)
   {
+    $this->validate(request(), [
+      'title' => ['required', 'min:3'],
+      'description' => ['required', 'min:3'],
+      'address' => 'required',
+      'city' => 'required', 
+      'state' => 'required',
+      'zipcode' => 'required',
+    ]);
     Service::create([
       'title' => request('title'),
       'description' => request('description'),
@@ -80,7 +88,7 @@ class ServicesController extends Controller
       'longitude' => request('longitude')
     ]);
 
-    return redirect('admin');
+    return ['message' => 'Services Created'];
   }
 
   /**
@@ -114,7 +122,7 @@ class ServicesController extends Controller
   public function update(Request $request, Service $service)
   {
     $service->update(request(['title', 'description', 'address']));
-    return ['Success']; 
+    return ['message' => 'Service Updated']; 
   }
 
   /**
@@ -126,6 +134,6 @@ class ServicesController extends Controller
   public function destroy(Service $service)
   {
     $service->delete();
-    return ['Success'];
+    return ['message' => 'Service Deleted'];
   }
 }

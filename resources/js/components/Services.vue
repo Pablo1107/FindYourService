@@ -27,7 +27,7 @@
       <p v-else>There is no services stored in the database, would you like to create one?</p>
     </div> 
     <router-view :services="services"
-         @success="onFormSuccess"
+         @success="onCreateSuccess"
          @update="onUpdate"
          @delete="onDelete"></router-view>
   </main> 
@@ -57,10 +57,11 @@ export default {
   data() {
     return {
       services: [],
+      errors: {},
     }
   },
   methods: {
-    onFormSuccess(form) {
+    onCreateSuccess(form) {
       console.log('Form Success');
       console.log(form);
       this.services.push({
@@ -77,21 +78,21 @@ export default {
     },
     onUpdate(service) {
       axios.patch('/services/' + service.id, service)
-        .then(function (response) {
-          console.log('success');
+        .then((response) => {
+          console.log(response);
           function replaceAt(array, index, value) {
             const ret = array.slice(0);
             ret[index] = value;
-            console.log(ret[0].title);
             return ret;
           }
           this.services = replaceAt(this.services, this.services.indexOf(serv => serv.id == service.id) + 1, service); 
           window.location.href = "#/services/" + service.id;
-        }.bind(this))
+        })
         .catch(function (error) {
           console.log('error');
-          console.log(error);
-        });
+          console.log(error.response);
+          this.errors = error.response.data;
+        }.bind(this));
     },
     onDelete(id) {
       axios.delete('/services/' + id)
