@@ -75,8 +75,8 @@ export default {
       });
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position.coords.latitude);
-        console.log(position.coords.longitude);
+        //console.log(position.coords.latitude);
+        //console.log(position.coords.longitude);
         this.user.position.lat = position.coords.latitude;
         this.user.position.lng = position.coords.longitude;
         //var circle = new google.maps.Circle({
@@ -99,13 +99,13 @@ export default {
       }
       if(this.radius) {
         let userPos = new google.maps.LatLng(this.user.position.lat, this.user.position.lng);
-        console.log('User: (' + userPos.lat() + ', ' + userPos.lng() + ')');
+        //console.log('User: (' + userPos.lat() + ', ' + userPos.lng() + ')');
         filtered = filtered.filter(service => {
           let servPos = new google.maps.LatLng(service.latitude, service.longitude);
-          console.log('Service: (' + servPos.lat() + ', ' + servPos.lng() + ')');
+          //console.log('Service: (' + servPos.lat() + ', ' + servPos.lng() + ')');
           let distance = google.maps.geometry.spherical.computeDistanceBetween(userPos, servPos);
-          console.log('Distance: ' + distance);
-          console.log(distance < this.radius * 1000);
+          //console.log('Distance: ' + distance);
+          //console.log(distance < this.radius * 1000);
           return distance < this.radius * 1000;
         });
       }
@@ -123,7 +123,7 @@ export default {
         if(this.radius) return distance < this.radius * 1000;
         else return true;
       });
-      console.log(filtered);
+      //console.log(filtered);
 
       return filtered;
     }
