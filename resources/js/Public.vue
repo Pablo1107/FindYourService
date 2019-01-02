@@ -50,7 +50,13 @@ export default {
           this.services.push({ 
             id: services[i].id,
             title: services[i].title,
+            description: services[i].description,
+            address: services[i].address,
             city: services[i].city,
+            state: services[i].state,
+            zipcode: services[i].zipcode,
+            latitude: services[i].latitude,
+            longitude: services[i].longitude,
           });
           this.markers.push({ 
             position: {
@@ -86,23 +92,35 @@ export default {
   computed: {
     searchedServices() {
       let filtered = this.services;
-      if (this.search) {
-        filtered = this.services.filter(service => 
+      if(this.search) {
+        filtered = filtered.filter(service => 
           service.title.toLowerCase().includes(this.search)
         );
+      }
+      if(this.radius) {
+        let userPos = new google.maps.LatLng(this.user.position.lat, this.user.position.lng);
+        console.log('User: (' + userPos.lat() + ', ' + userPos.lng() + ')');
+        filtered = filtered.filter(service => {
+          let servPos = new google.maps.LatLng(service.latitude, service.longitude);
+          console.log('Service: (' + servPos.lat() + ', ' + servPos.lng() + ')');
+          let distance = google.maps.geometry.spherical.computeDistanceBetween(userPos, servPos);
+          console.log('Distance: ' + distance);
+          console.log(distance < this.radius * 1000);
+          return distance < this.radius * 1000;
+        });
       }
       return filtered;
     },
     filteredMarkers() {
       let userPos = new google.maps.LatLng(this.user.position.lat, this.user.position.lng);
-      console.log('User: (' + userPos.lat() + ', ' + userPos.lng() + ')');
+      //console.log('User: (' + userPos.lat() + ', ' + userPos.lng() + ')');
       let filtered = this.markers.filter(mark => {
         let markPos = new google.maps.LatLng(mark.position.lat, mark.position.lng);
-        console.log('Mark: (' + markPos.lat() + ', ' + markPos.lng() + ')');
+        //console.log('Mark: (' + markPos.lat() + ', ' + markPos.lng() + ')');
         let distance = google.maps.geometry.spherical.computeDistanceBetween(userPos, markPos);
-        console.log('Distance: ' + distance);
-        console.log(distance < this.radius * 1000);
-        if(this.radius > 0) return distance < this.radius * 1000;
+        //console.log('Distance: ' + distance);
+        //console.log(distance < this.radius * 1000);
+        if(this.radius) return distance < this.radius * 1000;
         else return true;
       });
       console.log(filtered);

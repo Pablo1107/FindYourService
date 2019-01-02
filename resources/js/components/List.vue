@@ -4,11 +4,11 @@
       <table class="table table-striped table-sm" v-if="services.length">
         <thead>
           <tr>
-            <th v-for="key in Object.keys(services[0])">{{ key }}</th>
+            <th v-for="key in Object.keys(filteredServices[0])">{{ key }}</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="table-items-row" v-for="service in services" 
+          <tr class="table-items-row" v-for="service in filteredServices" 
                                       :key="service.id">
             <td v-for="array in Object.entries(service)">
               <a :href="'/services/' + service.id">{{ array[1] }}</a>
@@ -25,5 +25,10 @@
 export default {
   name: 'List',
   props: ['services'],
+  computed: {
+    filteredServices() {
+      return this.services.map((service, index) => { return { id: service.id, title: service.title, city: service.city } });
+    },
+  }
 }
 </script>
