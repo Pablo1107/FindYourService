@@ -1,27 +1,34 @@
 <template id="">
-  <div class="box">
-    <google-map class="maps" :markers="markers"></google-map>
-    <List class="list" :services="searchedServices"></List>
-    <Navbar class="navbar fixed-bottom " v-model="search"></Navbar>
+  <div>
+    <Navbar class="fixed-top"></Navbar>
+    <div class="container-fluid">
+      <div class="row">
+        <Column></Column>
+
+        <Services :services="searchedServices"></Services>
+      </div>
+    </div>
   </div>
 </template>
 
 <script charset="utf-8">
 import GoogleMap from './components/GoogleMap';
-import List from './components/List';
 import Navbar from './components/Navbar';
+import Column from './components/Column';
+import Services from './components/Services';
 
 export default {
   components: {
-    GoogleMap,
-    List,
     Navbar,
+    Column,
+    Services,
   },
   data() {
     return {
       services: [],
       search: '',
       markers: [],
+      visible: false,
     }
   },
   created() {
@@ -32,7 +39,13 @@ export default {
           this.services.push({ 
             id: services[i].id,
             title: services[i].title,
+            description: services[i].description,
+            address: services[i].address,
             city: services[i].city,
+            state: services[i].state,
+            zipcode: services[i].zipcode,
+            latitude: services[i].latitude,
+            longitude: services[i].longitude,
           });
           this.markers.push({ 
             position: {
@@ -63,28 +76,3 @@ export default {
   },
 }
 </script>
-
-<style type="text/css" media="screen">
-.box {
-  display: flex;
-  flex-flow: column;
-  height: 100%;
-}
-
-.box .list {
-  flex: 0 1 auto;
-  /* The above is shorthand for:
-  flex-grow: 0,
-  flex-shrink: 1,
-  flex-basis: auto
-  */
-}
-
-.box .maps {
-  flex: 1 1 auto;
-}
-
-.box .navbar {
-  flex: 0 1 10px;
-}
-</style>

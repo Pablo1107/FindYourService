@@ -2,7 +2,7 @@
   <h1 class="h2">@{{ currentService.title }}</h1>
   <div class="btn-toolbar mb-2 mb-md-0">
     <div class="btn-group mr-2">
-      <form method="GET">
+      <form @submit.prevent="editService(currentService.id)">
         <input type="submit" class="btn btn-sm btn-outline-secondary" value="Edit">
       </form> 
       <form @submit.prevent="deleteService(currentService.id)">

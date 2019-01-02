@@ -90,7 +90,7 @@ class ServicesController extends Controller
    */
   public function show(Service $service)
   {
-    return view('services.show', compact('service'));
+    return $service; 
   }
 
   /**
@@ -114,7 +114,7 @@ class ServicesController extends Controller
   public function update(Request $request, Service $service)
   {
     $service->update(request(['title', 'description', 'address']));
-    return redirect('admin');
+    return ['Success']; 
   }
 
   /**
