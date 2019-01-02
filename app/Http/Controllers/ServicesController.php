@@ -8,6 +8,10 @@ use App\Services\Google;
 
 class ServicesController extends Controller
 {
+  public function __construct()
+  {
+    $this->middleware('auth')->except(['public', 'list']);
+  }
   /**
    * Display a listing of the resource.
    *
