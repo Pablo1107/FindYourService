@@ -32,9 +32,20 @@ git clone https://github.com/Pablo1107/FindYourService.git
 cd FindYourService
 composer update
 npm install
-npm run dev
 ```
 
+Now you have to copy .env.example into .env and fill the info for your database
+and the API key for GoogleMaps.
+```bash
+cd .env.example .env
+vim .env
+```
+
+Then you can compile the source JS ans SASS files.
+
+```bash
+npm run dev
+```
 # Running the web app locally
 
 You can run a local server with artisan.
