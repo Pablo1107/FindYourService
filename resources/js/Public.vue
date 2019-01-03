@@ -5,13 +5,13 @@
     <Navbar class="navbar fixed-bottom " v-model="search">
     <select style="width: 150px; margin-left: 10px" v-model="radius">
       <option :value="0">Anywhere</option>
-      <option :value="1">1km</option>
-      <option :value="2">2km</option>
-      <option :value="5">5km</option>
-      <option :value="10">10km</option>
-      <option :value="25">25km</option>
-      <option :value="50">50km</option>
-      <option :value="100">100km</option>
+      <option v-if="hasUserPosition" :value="1">1km</option>
+      <option v-if="hasUserPosition" :value="2">2km</option>
+      <option v-if="hasUserPosition" :value="5">5km</option>
+      <option v-if="hasUserPosition" :value="10">10km</option>
+      <option v-if="hasUserPosition" :value="25">25km</option>
+      <option v-if="hasUserPosition" :value="50">50km</option>
+      <option v-if="hasUserPosition" :value="100">100km</option>
     </select>
     </Navbar>
   </div>
@@ -39,10 +39,11 @@ export default {
           lat: 0.0,
           lng: 0.0,
         }
-      }
+      },
+      watcher: null,
     }
   },
-  created() {
+  mounted() {
     axios.get('/services/list')
       .then(response => {
         let services = response.data;
@@ -73,21 +74,18 @@ export default {
       .catch(error => {
         console.log('There was an error.');
       });
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        //console.log(position.coords.latitude);
-        //console.log(position.coords.longitude);
-        this.user.position.lat = position.coords.latitude;
-        this.user.position.lng = position.coords.longitude;
-        //var circle = new google.maps.Circle({
-        //  center: geolocation,
-        //  radius: position.coords.accuracy
-        //});
-        //autocomplete.setBounds(circle.getBounds());
-      });
-    } else {
-      console.log('error');
-    }
+    this.watcher = navigator.geolocation.watchPosition((position) => {
+      //console.log(position);
+      //console.log(position.coords.latitude);
+      //console.log(position.coords.longitude);
+      this.user.position.lat = position.coords.latitude;
+      this.user.position.lng = position.coords.longitude;
+      //var circle = new google.maps.Circle({
+      //  center: geolocation,
+      //  radius: position.coords.accuracy
+      //});
+      //autocomplete.setBounds(circle.getBounds());
+    });
   },
   computed: {
     searchedServices() {
@@ -126,6 +124,9 @@ export default {
       //console.log(filtered);
 
       return filtered;
+    },
+    hasUserPosition() {
+      return this.user.position.lat != 0.0 && this.user.position.lng != 0.0;
     }
   },
 }
