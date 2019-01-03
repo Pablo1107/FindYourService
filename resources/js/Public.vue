@@ -2,7 +2,7 @@
   <div class="box">
     <google-map class="maps" :markers="filteredMarkers"></google-map>
     <List class="list" :services="searchedServices"></List>
-    <Navbar class="navbar fixed-bottom " v-model="search">
+    <Navbar class="navbar" v-model="search">
     <select style="width: 150px; margin-left: 10px" v-model="radius">
       <option :value="0">Anywhere</option>
       <option v-if="hasUserPosition" :value="1">1km</option>
@@ -133,6 +133,10 @@ export default {
 </script>
 
 <style type="text/css" media="screen">
+.jumbotron {
+  margin-bottom: 0;
+}
+
 .box {
   display: flex;
   flex-flow: column;
@@ -140,6 +144,8 @@ export default {
 }
 
 .box .list {
+  min-height: 1%;
+  overflow: hidden;
   flex: 0 1 auto;
   /* The above is shorthand for:
   flex-grow: 0,
