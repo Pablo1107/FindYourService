@@ -143,7 +143,8 @@ export default {
       return this.services.map((service, index) => { return { id: service.id, title: service.title, city: service.city } });
     },
     newIndex() {
-      return this.services[this.services.length - 1].id + 1;
+      if(this.services.length) return this.services[this.services.length - 1].id + 1;
+      else return 0;
     },
     searchedServices() {
       let filtered = this.filteredServices;
