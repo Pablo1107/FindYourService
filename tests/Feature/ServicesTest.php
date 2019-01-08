@@ -38,7 +38,7 @@ class ServicesTest extends TestCase
     }
 
     /**
-     * Test if a auth user can create a service
+     * Test if a guest user cannot create a service
      *
      * @return void
      */
