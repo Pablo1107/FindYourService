@@ -38,7 +38,7 @@ class ServicesTest extends TestCase
     }
 
     /**
-     * Test if a auth user can create a service
+     * Test if a guest user cannot create a service
      *
      * @return void
      */
@@ -47,5 +47,20 @@ class ServicesTest extends TestCase
         // When guest try to hit the endpoint /services
         $this->post('/services')->assertRedirect('/login');
 
+    }
+
+    /**
+     * Test if a guest user can list services
+     *
+     * @return void
+     */
+    public function test_a_guest_can_list_services()
+    {
+        // Given
+        $services = factory('App\Service', 3)->create(); 
+        // When guest try to hit the endpoint /services
+        $this->get('/services/list')
+             ->assertStatus(200)
+             ->assertJson($services->toArray());
     }
 }
