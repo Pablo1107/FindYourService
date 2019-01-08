@@ -48,4 +48,19 @@ class ServicesTest extends TestCase
         $this->post('/services')->assertRedirect('/login');
 
     }
+
+    /**
+     * Test if a guest user can list services
+     *
+     * @return void
+     */
+    public function test_a_guest_can_list_services()
+    {
+        // Given
+        $services = factory('App\Service', 3)->create(); 
+        // When guest try to hit the endpoint /services
+        $this->get('/services/list')
+             ->assertStatus(200)
+             ->assertJson($services->toArray());
+    }
 }
