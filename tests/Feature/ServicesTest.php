@@ -88,8 +88,9 @@ class ServicesTest extends TestCase
     public function test_a_guest_may_not_visit_admin_view()
     {
         // Given guest user
-        // When guest try to get the endpoint / Then it should redirect to login
+        // When guest try to get the endpoint /admin
         $this->get('/admin')->assertRedirect('/login');
+        // Then it should redirect to login
 
     }
 
@@ -103,8 +104,9 @@ class ServicesTest extends TestCase
         // Given an auth user
         $this->actingAs(factory('App\User')->create());
 
-        // When guest try to get the endpoint / it should return login view
+        // When guest try to get the endpoint /admin
         $this->get('/admin')->assertViewIs('admin');
+        // Then it should return admin view
 
     }
 }
