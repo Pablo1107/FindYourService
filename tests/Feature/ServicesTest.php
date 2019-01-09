@@ -109,4 +109,35 @@ class ServicesTest extends TestCase
         // Then it should return admin view
 
     }
+
+    /**
+     * Test if endpoint /loginStatus returns accurate data
+     *
+     * @return void
+     */
+    public function test_login_status()
+    {
+        // Given guest
+        // When view hit /login status
+        $this->get('/loginStatus')
+            ->assertStatus(200)
+            ->assertJson([
+                'isLogged' => false,
+                'user' => null
+            ]);
+        // Then server returns user not logged
+
+        // Given an auth user
+        $user = factory('App\User')->create();
+        $this->actingAs($user);
+
+        // When view hit /login status
+        $this->get('/loginStatus')
+            ->assertStatus(200)
+            ->assertJsonFragment([
+                'isLogged' => true,
+            ])
+            ->assertSee(json_encode($user->toArray()));
+        // Then server returns user is logged and user name
+    }
 }
