@@ -44,8 +44,10 @@ class ServicesTest extends TestCase
      */
     public function test_a_guest_may_not_create_service()
     {
+        // Given guest user
         // When guest try to hit the endpoint /services
         $this->post('/services')->assertRedirect('/login');
+        // Then guest is redirected to /login
 
     }
 
@@ -62,5 +64,47 @@ class ServicesTest extends TestCase
         $this->get('/services/list')
              ->assertStatus(200)
              ->assertJson($services->toArray());
+        // Then it should return collection of services
+    }
+
+    /**
+     * Test if a guest user can visit the public view
+     *
+     * @return void
+     */
+    public function test_a_guest_can_visit_public_view()
+    {
+        // Given a guest user
+        // When guest try to get the endpoint / Then it should return public view
+        $this->get('/')->assertStatus(200)->assertViewIs('services.public');
+
+    }
+
+    /**
+     * Test if a guest user may not visit the admin view
+     *
+     * @return void
+     */
+    public function test_a_guest_may_not_visit_admin_view()
+    {
+        // Given guest user
+        // When guest try to get the endpoint / Then it should redirect to login
+        $this->get('/admin')->assertRedirect('/login');
+
+    }
+
+    /**
+     * Test if a auth user can visit the admin view
+     *
+     * @return void
+     */
+    public function test_a_user_can_visit_admin_view()
+    {
+        // Given an auth user
+        $this->actingAs(factory('App\User')->create());
+
+        // When guest try to get the endpoint / it should return login view
+        $this->get('/admin')->assertViewIs('admin');
+
     }
 }
